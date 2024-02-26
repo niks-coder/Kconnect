@@ -666,7 +666,6 @@ redis:
   # TTL for short-living SET commands that are used to replace DEL to enable transaction support
   evictTtlInMs: "${REDIS_EVICT_TTL_MS:60000}"
 
-
 # Update version parameters
 updates:
   # Enable/disable checks for the new version
@@ -727,7 +726,7 @@ spring:
     # Database user name
     username: "${SPRING_DATASOURCE_USERNAME:postgres}"
     # Database user password
-    password: "${SPRING_DATASOURCE_PASSWORD:postgres}"
+    password: "${SPRING_DATASOURCE_PASSWORD:root}"
     hikari:
       # This property controls the amount of time that a connection can be out of the pool before a message is logged indicating a possible connection leak. A value of 0 means leak detection is disabled
       leakDetectionThreshold: "${SPRING_DATASOURCE_HIKARI_LEAK_DETECTION_THRESHOLD:0}"
@@ -1340,7 +1339,7 @@ queue:
       # The mechanism used to authenticate Schema Registry requests. SASL/PLAIN should only be used with TLS/SSL as a transport layer to ensure that clear passwords are not transmitted on the wire without encryption
       sasl.mechanism: "${TB_QUEUE_KAFKA_CONFLUENT_SASL_MECHANISM:PLAIN}"
       # Using JAAS Configuration for specifying multiple SASL mechanisms on a broker
-      sasl.config: "${TB_QUEUE_KAFKA_CONFLUENT_SASL_JAAS_CONFIG:org.apache.kafka.common.security.plain.PlainLoginModule required username=\"CLUSTER_API_KEY\" password=\"CLUSTER_API_SECRET\";}"
+      sasl.config: '${TB_QUEUE_KAFKA_CONFLUENT_SASL_JAAS_CONFIG:org.apache.kafka.common.security.plain.PlainLoginModule required username="CLUSTER_API_KEY" password="CLUSTER_API_SECRET";}'
       # Protocol used to communicate with brokers. Valid values are: PLAINTEXT, SSL, SASL_PLAINTEXT, SASL_SSL
       security.protocol: "${TB_QUEUE_KAFKA_CONFLUENT_SECURITY_PROTOCOL:SASL_SSL}"
     # Key-value properties for Kafka consumer per specific topic, e.g. tb_ota_package is a topic name for ota, tb_rule_engine.sq is a topic name for default SequentialByOriginator queue.
@@ -1596,7 +1595,7 @@ queue:
       - name: "${TB_QUEUE_RE_HP_QUEUE_NAME:HighPriority}" # queue name
         topic: "${TB_QUEUE_RE_HP_TOPIC:tb_rule_engine.hp}" # queue topic
         poll-interval: "${TB_QUEUE_RE_HP_POLL_INTERVAL_MS:25}" # poll interval
-        partitions: "${TB_QUEUE_RE_HP_PARTITIONS:10}"  # number queue partitions
+        partitions: "${TB_QUEUE_RE_HP_PARTITIONS:10}" # number queue partitions
         consumer-per-partition: "${TB_QUEUE_RE_HP_CONSUMER_PER_PARTITION:true}" # if true - use for each customer different partition
         pack-processing-timeout: "${TB_QUEUE_RE_HP_PACK_PROCESSING_TIMEOUT_MS:2000}" # Timeout for processing a message pack
         submit-strategy:
@@ -1693,4 +1692,4 @@ management:
     web:
       exposure:
         # Expose metrics endpoint (use value 'prometheus' to enable prometheus metrics).
-        include: '${METRICS_ENDPOINTS_EXPOSE:info}'
+        include: "${METRICS_ENDPOINTS_EXPOSE:info}"
